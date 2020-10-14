@@ -3,8 +3,8 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  test:
-    name: Run Tests
+  everything:
+    name: Checkout, Build, Lint and Test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -30,6 +30,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Lint Ember addon JS
+        run: npm run lint:js
+
+      - name: Lint Ember addon HBS
+        run: npm run lint:hbs
 
       - name: Test Ember addon
         run: npm test
