@@ -166,7 +166,7 @@ module('Integration | Component | select-light', function(hooks) {
 		await triggerEvent('select', 'change');
 
 		assert.dom('select').hasValue('turtle');
-		assert.equal(this.get('myValue'), 'turtle');
+		assert.equal(this.myValue, 'turtle');
 	});
 
 	test('should fire change when user chooses option, mut with flat array', async function(assert) {
@@ -183,7 +183,7 @@ module('Integration | Component | select-light', function(hooks) {
 		await triggerEvent('select', 'change');
 
 		assert.dom('select').hasValue(options[0]);
-		assert.equal(this.get('myValue'), options[0]);
+		assert.equal(this.myValue, options[0]);
 	});
 
 	test('should fire change when user chooses option, custom action with flat array', async function(assert) {

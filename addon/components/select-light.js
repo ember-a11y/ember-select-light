@@ -19,7 +19,7 @@ export default Component.extend({
   valueKey: 'value',
   displayKey: 'label',
 
-  isDeepOptions: computed('options', 'valueKey', 'displayKey', function() {
+  isDeepOptions: computed('options', 'options.length', 'valueKey', 'displayKey', function() {
     if (!this.options || this.options.length === 0 || !this.valueKey || !this.displayKey) return false;
 
     let firstOptionValue = this.options[0][this.valueKey];
