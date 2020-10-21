@@ -1,11 +1,5 @@
 import hbs from 'htmlbars-inline-precompile';
-import {
-  render,
-  find,
-  findAll,
-  fillIn,
-  triggerEvent
-} from '@ember/test-helpers';
+import { render, fillIn, triggerEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 
@@ -15,7 +9,7 @@ module('Integration | Component | select-light', function(hooks) {
 	test('should be a <select> element', async function(assert) {
 		await render(hbs`<SelectLight />`);
 
-		assert.equal(find('select').tagName, 'SELECT');
+    assert.dom('select').hasTagName('select');
 	});
 
 	test('should allow classes, ids and names to be added to <select>', async function(assert) {
@@ -26,7 +20,7 @@ module('Integration | Component | select-light', function(hooks) {
         class="form-item" />
     `);
 
-		assert.ok(find('select').className.indexOf('form-item') !== -1);
+    assert.dom('select').hasClass('form-item');
 		assert.dom('select').hasAttribute('name', 'snail');
 		assert.dom('select').hasAttribute('id', 'slug');
 	});
@@ -36,17 +30,18 @@ module('Integration | Component | select-light', function(hooks) {
 
 		await render(hbs`<SelectLight @disabled={{this.disabled}} />`);
 
-		assert.equal(find('select').hasAttribute('disabled'), false);
+    assert.dom('select').doesNotHaveAttribute('disabled');
 
 		this.set('disabled', true);
-		assert.equal(find('select').hasAttribute('disabled'), true);
+    assert.dom('select').hasAttribute('disabled');
 	});
 
 	test('should support tabindex', async function(assert) {
 		this.set('tabindex', null);
 
 		await render(hbs`<SelectLight @tabindex={{this.tabindex}} />`);
-		assert.equal(find('select').hasAttribute('tabindex'), false);
+
+		assert.dom('select').doesNotHaveAttribute('tabindex', '0');
 
 		this.set('tabindex', 0);
 		assert.dom('select').hasAttribute('tabindex', '0');
@@ -55,13 +50,13 @@ module('Integration | Component | select-light', function(hooks) {
 	test('should have no options if none are specified', async function(assert) {
 		await render(hbs`<SelectLight />`);
 
-		assert.equal(find('select').getElementsByTagName('option').length, 0);
+    assert.dom('select option').doesNotExist();
 	});
 
 	test('should have a (disabled) placeholder option if specified', async function(assert) {
 		await render(hbs`<SelectLight @placeholder="Walrus" />`);
 
-		assert.equal(find('select option').innerText.trim(), 'Walrus');
+    assert.dom('select option').includesText('Walrus');
 		assert.dom('option').hasAttribute('disabled');
 	});
 
@@ -72,7 +67,7 @@ module('Integration | Component | select-light', function(hooks) {
 		</SelectLight>
 	`);
 
-		assert.equal(find('select option').innerText, 'Platypus');
+		assert.dom('select option').includesText('Platypus');
 		assert.dom('select option').hasValue('plat');
 	});
 
@@ -82,7 +77,7 @@ module('Integration | Component | select-light', function(hooks) {
 
 		await render(hbs`<SelectLight @options={{this.options}} />`);
 
-		assert.equal(findAll('select option').length, options.length);
+    assert.dom('select option').exists({ count: options.length });
 	});
 
 	test('should select option that matches value', async function(assert) {
@@ -137,9 +132,9 @@ module('Integration | Component | select-light', function(hooks) {
         @options={{this.options}}
         @value={{this.value}} />`);
 
-		assert.equal(findAll('select option').length, options.length);
+    assert.dom('select option').exists({ count: options.length });
 		assert.dom('select option').hasAttribute('value', options[0].value);
-		assert.equal(find('select option').innerText.trim(), options[0].label);
+		assert.dom('select option').includesText(options[0].label);
 		assert.dom('select').hasValue(value);
 	});
 
@@ -163,7 +158,7 @@ module('Integration | Component | select-light', function(hooks) {
     `);
 
 		assert.dom('select option').hasAttribute('value', options[0].val);
-		assert.equal(find('select option').innerText.trim(), options[0].description);
+		assert.dom('select option').includesText(options[0].description);
 	});
 
 	test('should fire change when user chooses option, mut with yield', async function(assert) {
