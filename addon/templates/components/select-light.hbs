@@ -1,24 +1,23 @@
-{{#if placeholder}}
+{{#if @placeholder}}
   <option value="" selected disabled>
-    {{placeholder}}
+    {{@placeholder}}
   </option>
 {{/if}}
 
 {{#if hasBlock}}
   {{yield}}
 {{else}}
-  {{#if isDeepOptions}}
-    {{#each options as | optionValue |}}
+  {{#if this.isDeepOptions}}
+    {{#each @options as | optionValue |}}
       <option
-        value={{get optionValue valueKey}}
-        selected={{is-equal (get optionValue valueKey) value}}
-      >
-        {{get optionValue displayKey}}
+        value={{get optionValue this.valueKey}}
+        selected={{is-equal (get optionValue this.valueKey) @value}}>
+        {{get optionValue this.displayKey}}
       </option>
     {{/each}}
   {{else}}
-    {{#each options as | optionValue |}}
-      <option value={{optionValue}} selected={{is-equal optionValue value}}>
+    {{#each @options as | optionValue |}}
+      <option value={{optionValue}} selected={{is-equal optionValue @value}}>
         {{optionValue}}
       </option>
     {{/each}}
