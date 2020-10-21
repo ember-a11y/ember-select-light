@@ -200,13 +200,12 @@ module('Integration | Component | select-light', function(hooks) {
 	});
 
 	test('should fire change when user chooses option, custom action with flat array', async function(assert) {
-		assert.expect(1);
-
 		let options = ['clam', 'starfish'];
 		this.setProperties({
 			options,
 			value: options[1],
 			customAction: ({ target: { value } }) => {
+        assert.step('handled action');
 				assert.equal(value, options[0]);
 			},
 		});
@@ -217,7 +216,8 @@ module('Integration | Component | select-light', function(hooks) {
         @value={{this.value}}
         @change={{action this.customAction}} />
     `);
-
 		await fillIn('select', options[0]);
+
+    assert.verifySteps(['handled action']);
 	});
 });
