@@ -1,29 +1,21 @@
-import layout from '../templates/components/select-light';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { isPresent } from '@ember/utils';
 
-const options = [];
+const noop = () => {};
 
-export default Component.extend({
-  layout,
-  tagName: 'select',
-  attributeBindings: ['name', 'id', 'disabled', 'tabindex'],
+export default class extends Component {
+  constructor() {
+    super(...arguments);
 
-  value: null,
-  name: null,
-  id: null,
-  disabled: false,
-  tabindex: null,
-  placeholder: '',
-  options,
-  valueKey: 'value',
-  displayKey: 'label',
+    this.valueKey = this.args.valueKey ?? 'value';
+    this.displayKey = this.args.displayKey ?? 'label';
+    this.change = this.args.change ?? noop;
+  }
 
-  isDeepOptions: computed('options', 'options.length', 'valueKey', 'displayKey', function() {
-    if (!this.options || this.options.length === 0 || !this.valueKey || !this.displayKey) return false;
-
-    let firstOptionValue = this.options[0][this.valueKey];
-    let firstOptionDisplay = this.options[0][this.displayKey];
-    return !(firstOptionValue === undefined && firstOptionDisplay === undefined);
-  }),
-});
+  get hasDetailedOptions() {
+    return [ // Returns a boolean if all data is available for a { label: foo, value: bar } style list of options
+      this.args.options?.[0][this.valueKey],
+      this.args.options?.[0][this.displayKey],
+    ].every(isPresent);
+  }
+}

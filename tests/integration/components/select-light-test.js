@@ -9,7 +9,7 @@ module('Integration | Component | select-light', function(hooks) {
 	test('should be a <select> element', async function(assert) {
 		await render(hbs`<SelectLight />`);
 
-    assert.dom('select').hasTagName('select');
+    assert.dom('select').exists();
 	});
 
 	test('should allow classes, ids and names to be added to <select>', async function(assert) {
@@ -28,7 +28,7 @@ module('Integration | Component | select-light', function(hooks) {
 	test('should be able to toggle disabled status', async function(assert) {
 		this.set('disabled', false);
 
-		await render(hbs`<SelectLight @disabled={{this.disabled}} />`);
+		await render(hbs`<SelectLight disabled={{this.disabled}} />`);
 
     assert.dom('select').doesNotHaveAttribute('disabled');
 
@@ -39,7 +39,7 @@ module('Integration | Component | select-light', function(hooks) {
 	test('should support tabindex', async function(assert) {
 		this.set('tabindex', null);
 
-		await render(hbs`<SelectLight @tabindex={{this.tabindex}} />`);
+		await render(hbs`<SelectLight tabindex={{this.tabindex}} />`);
 
 		assert.dom('select').doesNotHaveAttribute('tabindex', '0');
 
