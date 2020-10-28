@@ -6,11 +6,61 @@ Ember Select Light is an Ember Addon written [data-down, actions up (DDAU)](http
 
 The intent is to provide a barebones `<select>` element that pairs well with modern Ember practices without styling assumptions. The result is a very functional, yet customizable, option for developers seeking a simple solution to select elements in their forms and apps.
 
-## Install
+## Getting Started
 
 ```bash
 ember install ember-select-light
 ```
+
+### Example Usage
+
+```handlebars
+<SelectLight
+  @value="turtle"
+  @options=(array "turtle" "tortoise")
+  @change={{action "handleChange"}} />
+```
+
+#### With an array of objects...
+
+```handlebars
+<SelectLight
+  @options=(array
+    (hash value="shortfin" label="Shortfin Shark")
+    (hash value="mako" label="Mako Shark")
+  ) />
+```
+
+`value` and `label` will be the default object keys used unless `@valueKey="...` and/or `@displayKey="...` are used respectively, like so...
+
+```handlebars
+<SelectLight
+  @options=(array
+    (hash myValue="shortfin" myLabel="Shortfin Shark")
+    (hash myValue="mako" myLabel="Mako Shark")
+  )
+  @valueKey="myValue"
+  @displayKey="myLabel" />
+```
+
+#### As a Yield
+
+```handlebars
+<SelectLight>
+	<option value="clown">Clown Fish</option>
+	<option value="cat">Cat Fish</option>
+</SelectLight>
+```
+
+### Other arguments
+
+Other arguments are spread onto the `<select ...attributes` as you'd expect, allowing you to use common attributes such as `disabled`, `tabindex` and of course `class`.
+
+```handlebars
+<SelectLight class="my-select" disabled="true" />
+```
+
+---
 
 ## Running
 
@@ -35,76 +85,3 @@ Soon after some primary contributors will review your code and submit feedback a
 
 * `npm run test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * or `ember test`
-
-## Example Usage
-
-```javascript
-this.setProperties({
-	myValue: 'turtle',
-	myOptions: ['turtle', 'tortoise'],
-	myAction: (event) => {
-		console.log(event.target.value);
-	},
-});
-```
-
-```handlebars
-{{select-light value=myValue options=myOptions change=(action myAction)}}
-```
-
-### `value`
-
-String that matches the selected `<option value="...`.
-
-### `options`
-
-#### As a Flat Array
-
-```javascript
-['clam', 'starfish']
-```
-
-#### As an Array of Key/Value Objects
-
-```javascript
-[
-	{ value: 'shortfin', label: 'Shortfin Shark' },
-	{ value: 'mako', label: 'Mako Shark' },
-]
-```
-`value` and `label` will be the default keys used unless `valueKey="...` and/or `displayKey="...` are used respectively.
-
-#### As a Yield
-
-```handlebars
-{{#select-light}}
-	<option value="clown">Clown Fish</option>
-	<option value="cat">Cat Fish</option>
-{{/select-light}}
-```
-
-### Handling Events
-
-Any javascript event can be handled directly on the component such as `change` or `focusIn`. The `event` javascript object is passed along to be used however you desire.
-
-Common usages are...
-
-```javascript
-myAction(event) {
-	console.log(event.target.value); // Do something useful with the changed value
-},
-```
-
-or to modify a property without a custom action...
-
-```handlebars
-{{select-light change=(action (mut myValue) value="target.value")}}
-```
-
-### Other parameters
-
-`disabled`, `tabindex`, and `class` work as you'd expect.
-
-```handlebars
-{{select-light disabled=true tabindex="0" class="my-dropdown"}}
-```
