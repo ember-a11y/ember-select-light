@@ -1,6 +1,6 @@
 # Ember-Select-Light
 
-![build status](https://travis-ci.org/q2ebanking/ember-select-light.svg?branch=master) [![npm version](https://badge.fury.io/js/ember-select-light.svg)](https://badge.fury.io/js/ember-select-light) [![Ember Observer Score](https://emberobserver.com/badges/ember-select-light.svg)](https://emberobserver.com/addons/ember-select-light)
+![build status](https://travis-ci.org/q2ebanking/ember-select-light.svg?branch=master) [![npm version](https://badge.fury.io/js/ember-select-light.svg)](https://badge.fury.io/js/ember-select-light) [![Ember Observer Score](https://emberobserver.com/badges/ember-select-light.svg)](https://emberobserver.com/addons/ember-select-light) [![npm package](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=2.0.0&x2=0)](https://badge.fury.io/js/ember-select-light) [![Ember Observer](https://emberobserver.com/badges/ember-select-light.svg)](https://emberobserver.com/addons/ember-select-light)
 
 Ember Select Light is an Ember Addon written [data-down, actions up (DDAU)](https://dockyard.com/blog/2016/11/18/checkbox-list-ember) written with in [test-driven development](https://www.agilealliance.org/glossary/tdd/) practices.
 
