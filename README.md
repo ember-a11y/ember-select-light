@@ -62,6 +62,12 @@ Other arguments are spread onto the `<select ...attributes` as you'd expect, all
 
 ---
 
+## Upgrading
+
+See [the upgrading guide for how to upgrade from previous versions](./UPGRADE.md).
+
+---
+
 ## Running
 
 * `ember serve`
