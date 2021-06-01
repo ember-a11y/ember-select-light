@@ -183,7 +183,7 @@ module('Integration | Component | select-light', function(hooks) {
 		assert.dom('select').hasValue(value);
 	});
 
-	test('should fire change when user chooses option, mut with yield', async function(assert) {
+	test('should fire onChange despite the deprecation warning if using @change', async function(assert) {
 		this.set('myValue', null);
 
 		await render(hbs`
@@ -199,7 +199,23 @@ module('Integration | Component | select-light', function(hooks) {
 		assert.equal(this.myValue, 'turtle');
 	});
 
-	test('should fire change when user chooses option, mut with flat array', async function(assert) {
+	test('should fire onChange when user chooses option, mut with yield', async function(assert) {
+		this.set('myValue', null);
+
+		await render(hbs`
+      <SelectLight @onChange={{action (mut myValue) value="target.value"}}>
+        <option value="turtle">Turtle</option>
+      </SelectLight>
+    `);
+
+		await fillIn('select', 'turtle');
+		await triggerEvent('select', 'change');
+
+		assert.dom('select').hasValue('turtle');
+		assert.equal(this.myValue, 'turtle');
+	});
+
+	test('should fire onChange when user chooses option, mut with flat array', async function(assert) {
 		let options = ['clam', 'starfish'];
 		this.setProperties({
 			options,
@@ -211,7 +227,7 @@ module('Integration | Component | select-light', function(hooks) {
       <SelectLight
         @options={{this.options}}
         @value={{this.value}}
-        @change={{action (mut this.myValue) value="target.value"}} />
+        @onChange={{action (mut this.myValue) value="target.value"}} />
     `);
 
 		await fillIn('select', options[0]);
@@ -221,7 +237,7 @@ module('Integration | Component | select-light', function(hooks) {
 		assert.equal(this.myValue, options[0]);
 	});
 
-	test('should fire change when user chooses option, custom action with flat array', async function(assert) {
+	test('should fire onChange when user chooses option, custom action with flat array', async function(assert) {
 		let options = ['clam', 'starfish'];
 		this.setProperties({
 			options,
@@ -236,7 +252,7 @@ module('Integration | Component | select-light', function(hooks) {
       <SelectLight
         @options={{this.options}}
         @value={{this.value}}
-        @change={{action this.customAction}} />
+        @onChange={{action this.customAction}} />
     `);
 		await fillIn('select', options[0]);
 

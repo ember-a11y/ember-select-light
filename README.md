@@ -18,7 +18,7 @@ ember install ember-select-light
 <SelectLight
   @value="turtle"
   @options={{array "turtle" "tortoise"}}
-  @change={{action "handleChange"}} />
+  @onChange={{action "handleChange"}} />
 ```
 
 #### With an array of objects...
