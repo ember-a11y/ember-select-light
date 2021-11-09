@@ -25,7 +25,6 @@ export default class extends Component {
   get hasDetailedOptions() {
     return ![ // Returns a boolean if all data is available for a { label: foo, value: bar } style list of options
       this.args.options?.[0][this.valueKey],
-      this.args.options?.[0][this.displayKey],
     ].some(isNone);
   }
 }

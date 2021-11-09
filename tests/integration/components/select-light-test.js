@@ -153,8 +153,9 @@ module('Integration | Component | select-light', function(hooks) {
       <SelectLight
         @options={{this.options}}
         @value={{this.value}}
-        @valueKey="val"
-        @displayKey="description" />
+        @valueKey="val">
+				<:option as |optionValue| >{{optionValue.description}}</:option>
+			</SelectLight>
     `);
 
 		assert.dom('select option').hasAttribute('value', options[0].val);
