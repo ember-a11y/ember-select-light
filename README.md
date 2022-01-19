@@ -31,7 +31,7 @@ ember install ember-select-light
   }} />
 ```
 
-`value` and `label` will be the default object keys used unless `@valueKey="...` and/or `@displayKey="...` are used respectively, like so...
+The text`value` and `label` will be the default object keys used for the HTML `option` and innerText respectively unless `@valueKey="...` and/or `@displayKey="...` are used respectively, like so...
 
 ```handlebars
 <SelectLight

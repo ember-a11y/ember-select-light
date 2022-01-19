@@ -8,22 +8,23 @@
   {{/if}}
 
   {{#if hasBlock}}
-    {{yield}}
+    {{yield (hash
+      option=(
+        component "select-light/option"
+        parent=this
+        valueKey=this.valueKey
+        displayKey=this.displayKey
+        selectedValue=@value
+      )
+    )}}
   {{else}}
-    {{#if this.hasDetailedOptions}}
-      {{#each @options as | optionValue |}}
-        <option
-          value={{get optionValue this.valueKey}}
-          selected={{is-equal (get optionValue this.valueKey) @value}}>
-          {{get optionValue this.displayKey}}
-        </option>
-      {{/each}}
-    {{else}}
-      {{#each @options as | optionValue |}}
-        <option value={{optionValue}} selected={{is-equal optionValue @value}}>
-          {{optionValue}}
-        </option>
-      {{/each}}
-    {{/if}}
+    {{#each @options as | optionValue |}}
+      <SelectLight::Option
+        @parent={{this}}
+        @valueKey={{this.valueKey}}
+        @displayKey={{this.displayKey}}
+        @value={{optionValue}}
+        @selectedValue={{@value}} />
+    {{/each}}
   {{/if}}
 </select>

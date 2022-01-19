@@ -1,0 +1,7 @@
+<option value={{this.value}} selected={{this.selected}} ...attributes>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{this.label}}
+  {{/if}}
+</option>

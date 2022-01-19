@@ -1,16 +1,19 @@
 import Component from '@glimmer/component';
 import { isNone } from '@ember/utils';
 import { deprecate } from '@ember/debug';
+import { action } from '@ember/object';
 
 const noop = () => {};
 
 export default class extends Component {
+  childComponents = new Set();
+
   constructor() {
     super(...arguments);
+    this.changeCallback = this.args.onChange ?? this.args.change ?? noop;
 
     this.valueKey = this.args.valueKey ?? 'value';
     this.displayKey = this.args.displayKey ?? 'label';
-    this.change = this.args.onChange ?? this.args.change ?? noop;
 
     deprecate(`Triggering @change on <SelectLight /> is deprecated in favor of @onChange due to ember-template-lint's no-passed-in-event-handlers rule`, !this.args.change, {
       id: 'ember-select-light.no-passed-in-event-handlers',
@@ -20,6 +23,27 @@ export default class extends Component {
         enabled: '2.0.5',
       },
     });
+  }
+
+  registerChild(option) {
+    this.childComponents.add(option);
+  }
+
+  unregisterChild(option) {
+    this.childComponents.delete(option);
+  }
+
+  getValue(valueStr) {
+    return Array.from(this.childComponents).reduce((selectedValue, childComponent) => {
+      return childComponent.value == valueStr ? childComponent.objValue : selectedValue
+    }, valueStr);
+  }
+
+  @action
+  change(ev) {
+    let value = this.getValue(ev.target.value);
+
+    return this.changeCallback(value, ev);
   }
 
   get hasDetailedOptions() {
