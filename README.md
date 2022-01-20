@@ -21,6 +21,29 @@ ember install ember-select-light
   @onChange={{this.handleChange}} />
 ```
 
+`handleChange` should expect the first parameter to be the chosen value(s), the second is the full event, then you can handle it however you wish
+
+#### With [ember-set-helper](https://github.com/pzuraq/ember-set-helper)
+
+A quick and easy to implement option with minimal boilerplate.
+
+```js
+class MyComponent extends Component {
+  @tracked selected = "turtle";
+
+  handleChange = (value, event) => {
+    this.selected = value;
+  };
+}
+```
+
+```handlebars
+<SelectLight
+  @value={{this.selected}}
+  @options={{array "turtle" "tortoise"}}
+  @change={{set this "selected"}} />
+```
+
 #### With an array of objects...
 
 ```handlebars

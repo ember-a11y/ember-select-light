@@ -187,7 +187,7 @@ module('Integration | Component | select-light', function(hooks) {
 		this.set('myValue', null);
 
 		await render(hbs`
-      <SelectLight @change={{action (mut myValue) value="target.value"}}>
+      <SelectLight @change={{action (mut myValue)}}>
         <option value="turtle">Turtle</option>
       </SelectLight>
     `);
@@ -203,7 +203,7 @@ module('Integration | Component | select-light', function(hooks) {
 		this.set('myValue', null);
 
 		await render(hbs`
-      <SelectLight @onChange={{action (mut myValue) value="target.value"}}>
+      <SelectLight @onChange={{action (mut myValue)}}>
         <option value="turtle">Turtle</option>
       </SelectLight>
     `);
@@ -227,7 +227,7 @@ module('Integration | Component | select-light', function(hooks) {
       <SelectLight
         @options={{this.options}}
         @value={{this.value}}
-        @onChange={{action (mut this.myValue) value="target.value"}} />
+        @onChange={{action (mut this.myValue)}} />
     `);
 
 		await fillIn('select', options[0]);
@@ -242,7 +242,7 @@ module('Integration | Component | select-light', function(hooks) {
 		this.setProperties({
 			options,
 			value: options[1],
-			customAction: ({ target: { value } }) => {
+			customAction: (value) => {
         assert.step('handled action');
 				assert.equal(value, options[0]);
 			},

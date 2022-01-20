@@ -1,5 +1,8 @@
 # ember-select-light Changelog
 
+### v3.0.0 (January 20, 2021)
+- [#30](https://github.com/ember-a11y/ember-select-light/pull/43) [BREAKING] Change event now has value as first param, followed by the full event (thanks rtablada & pzuraq!)
+
 ### v2.0.4 (December 3, 2020)
 - [#26](https://github.com/ember-a11y/ember-select-light/pull/26) [BUGFIX] Fixes use case where passed in options objects have an empty string as the value or label (thanks javve!)
 

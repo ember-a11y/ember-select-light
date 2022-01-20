@@ -7,10 +7,12 @@ const noop = () => {};
 export default class extends Component {
   constructor() {
     super(...arguments);
+    const changeCallback = this.args.onChange ?? this.args.change ?? noop;
 
     this.valueKey = this.args.valueKey ?? 'value';
     this.displayKey = this.args.displayKey ?? 'label';
-    this.change = this.args.onChange ?? this.args.change ?? noop;
+
+    this.change = (ev) => changeCallback(ev.target.value, ev);
 
     deprecate(`Triggering @change on <SelectLight /> is deprecated in favor of @onChange due to ember-template-lint's no-passed-in-event-handlers rule`, !this.args.change, {
       id: 'ember-select-light.no-passed-in-event-handlers',
